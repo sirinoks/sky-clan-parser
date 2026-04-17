@@ -151,9 +151,17 @@ function filterDefinedAttacks(unsortedLogs: Array<string>) {
   return sortedLogs;
 }
 
+function parseLogs(text: string): Array<Fight> {
+  const allLines = lines(text);
+  const filtered = filterDefinedAttacks(allLines);
+  return parseDataFull(filtered);
+}
+
+
 let warLines = lines(warLogs2);
 let filtered = filterDefinedAttacks(warLines);
 const parsed: Array<Fight> = parseDataFull(filtered);
 console.log("Parsed data in parser is: ", parsed);
 
+export {parseLogs}
 export default parsed;
