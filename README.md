@@ -11,7 +11,7 @@ docker build -t sirinoks/skyclanparser .
 ```
 
 ```
-node src/parser.js
+node dist/parser.js
 ```
 
 ```

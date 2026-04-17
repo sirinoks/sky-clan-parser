@@ -55,7 +55,7 @@ const chatLogs = `
 13:10 (Бастион) остров "Не снимать !!! [3]" завтра будет атакован кланом "ЕВРОПА" в 22:30 по мск.
 `;
 
-console.log("start");
+console.log("Start of parser");
 
 let regex = `База \(*`;
 
@@ -79,20 +79,16 @@ function removeCollectedFromData(dataString: string, matchString: string) {
 
 let logs = [];
 
-function parseDataLine(line: string) {
+function parseDataLine(line: string): Fight {
   let oneLine = line;
 
-let location:Location;
   let stringLocation = oneLine.slice(
     oneLine.indexOf("База (") + "База (".length,
     oneLine.indexOf(","),
   );
-  if(stringLocation in Location) {//If the location is valid, then proceed
-    location = stringLocation;
-    oneLine = removeCollectedFromData(oneLine, ", ");
-  } else{
-    throw new Error("Invalid location: " + stringLocation+ ". Line: " + line);
-  }
+
+  let location: Location = stringLocation as Location;
+  oneLine = removeCollectedFromData(oneLine, ", ");
 
 
   let island = oneLine.slice(
@@ -133,8 +129,8 @@ let location:Location;
   return new Fight(location, island, builder, attackerClan, date, time);
 }
 
-function parseDataFull(lines: Array<string>) {
-  console.log(lines.length);
+function parseDataFull(lines: Array<string>): Array<Fight> {
+  console.log("Amount of lines is: "+ lines.length);
   var fights: Array<Fight> = [];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].length > 1) {
@@ -157,7 +153,7 @@ function filterDefinedAttacks(unsortedLogs: Array<string>) {
 
 let warLines = lines(warLogs2);
 let filtered = filterDefinedAttacks(warLines);
-let parsed = parseDataFull(filtered);
-console.log(parsed);
+const parsed: Array<Fight> = parseDataFull(filtered);
+console.log("Parsed data in parser is: ", parsed);
 
-export default { parsed };
+export default parsed;

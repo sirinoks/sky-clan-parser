@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pretest": "tsc --incremental -p tests/tsconfig.json",
-    "test": "playwright test -c tests-out"
+    "test": "playwright test -c tests-out",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -21,12 +22,13 @@
   },
   "homepage": "https://github.com/sirinoks/skyClanParser#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.2",
-    "@tsconfig/node21": "^21.0.1",
-    "@tsconfig/recommended": "^1.0.3",
+    "@tsconfig/node21": "^21.0.8",
+    "@tsconfig/recommended": "^1.0.13",
+    "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
     "typescript": "^6.0.3"
   }

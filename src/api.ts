@@ -1,19 +1,15 @@
+import express from "express";
 import parsed from "./parser";
 
 console.log(parsed);
-console.log("TYPE IS");
 
-console.log(typeof parsed);
+const app = express();
+const port = 3643;
 
+app.get("/data", (req, res) => {
+  res.json(parsed);
+});
 
-function getParsedData() {
-  return fetch(parsed.toString())
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data;
-    });
-}
-
-const result = getParsedData();
-console.log(result);
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
