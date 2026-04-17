@@ -1,5 +1,4 @@
-import type {Location} from "./fightClass";
-import Fight from "./fightClass";
+import Fight, { type Location } from "./fightClass";
 
 const clanLogs = `
 21:10:00 База (Осколки, [Лабиринт икаров Д 71:48]) Остров "В 1 /Добывающий остров [3]", построенный кланом "Небесная_КанЦеляриЯ", будет атакован кланом "Небесная_КанЦеляриЯ" 20.02.24 22:30 по мск.

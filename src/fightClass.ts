@@ -18,5 +18,5 @@ class Fight {
   }
 }
 
-export default Fight;
 export type { Location };
+export default Fight;
