@@ -1,3 +1,6 @@
+import type {Location} from "./fightClass";
+import Fight from "./fightClass";
+
 const clanLogs = `
 21:10:00 База (Осколки, [Лабиринт икаров Д 71:48]) Остров "В 1 /Добывающий остров [3]", построенный кланом "Небесная_КанЦеляриЯ", будет атакован кланом "Небесная_КанЦеляриЯ" 20.02.24 22:30 по мск.
 `;
@@ -71,7 +74,7 @@ function getPosition(string: string, subString: string, index: number) {
 function removeCollectedFromData(dataString: string, matchString: string) {
   return dataString.substring(
     dataString.indexOf(matchString) + matchString.length,
-    dataString.length
+    dataString.length,
   );
 }
 
@@ -80,27 +83,34 @@ let logs = [];
 function parseDataLine(line: string) {
   let oneLine = line;
 
-  let location = oneLine.slice(
+let location:Location;
+  let stringLocation = oneLine.slice(
     oneLine.indexOf("База (") + "База (".length,
-    oneLine.indexOf(",")
+    oneLine.indexOf(","),
   );
-  oneLine = removeCollectedFromData(oneLine, ", ");
+  if(stringLocation in Location) {//If the location is valid, then proceed
+    location = stringLocation;
+    oneLine = removeCollectedFromData(oneLine, ", ");
+  } else{
+    throw new Error("Invalid location: " + stringLocation+ ". Line: " + line);
+  }
+
 
   let island = oneLine.slice(
     oneLine.indexOf('Остров "') + 'Остров "'.length,
-    oneLine.indexOf(",") - ",".length
+    oneLine.indexOf(",") - ",".length,
   );
   oneLine = removeCollectedFromData(oneLine, ", ");
 
   let builder = oneLine.slice(
     oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length,
-    oneLine.indexOf(",") - ",".length
+    oneLine.indexOf(",") - ",".length,
   );
   oneLine = removeCollectedFromData(oneLine, ", ");
 
   let attackerClan = oneLine.slice(
     oneLine.indexOf('атакован кланом "') + 'атакован кланом "'.length,
-    oneLine.indexOf('" ')
+    oneLine.indexOf('" '),
   );
   oneLine = removeCollectedFromData(oneLine, '" ');
 
@@ -110,22 +120,23 @@ function parseDataLine(line: string) {
   //Time is always XX:XX
   let time = oneLine.slice(
     "XX.XX.XX ".length,
-    "XX.XX.XX ".length + "YY:YY".length
+    "XX.XX.XX ".length + "YY:YY".length,
   );
 
-  return {
-    location: location,
-    island: island,
-    builder: builder,
-    attacker: attackerClan,
-    date: date,
-    time: time,
-  };
+  // return {
+  //   location: location,
+  //   island: island,
+  //   builder: builder,
+  //   attacker: attackerClan,
+  //   date: date,
+  //   time: time,
+  // };
+  return new Fight(location, island, builder, attackerClan, date, time);
 }
 
 function parseDataFull(lines: Array<string>) {
   console.log(lines.length);
-  var fights: Array<object> = [];
+  var fights: Array<Fight> = [];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].length > 1) {
       fights.push(parseDataLine(lines[i]));
@@ -149,3 +160,5 @@ let warLines = lines(warLogs2);
 let filtered = filterDefinedAttacks(warLines);
 let parsed = parseDataFull(filtered);
 console.log(parsed);
+
+export default { parsed };
