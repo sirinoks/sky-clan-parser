@@ -1,4 +1,4 @@
-import { parseLogs } from "./parser";
+import parsed, { parseLogs } from "./parser";
 
 type ParseRequestBody = {
   logs?: string;
@@ -8,8 +8,12 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
 
-    if (request.method === "GET" && url.pathname === "/data") {
+    if (request.method === "GET" && url.pathname === "/") {
       return Response.json({ ok: true, message: "API is running" });
+    }
+
+    if (request.method === "GET" && url.pathname === "/data") {
+      return Response.json({ ok: true, message: `${parsed}` });
     }
 
     if (request.method === "POST" && url.pathname === "/parse") {
