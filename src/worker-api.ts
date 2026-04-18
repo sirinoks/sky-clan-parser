@@ -13,7 +13,7 @@ export default {
     }
 
     if (request.method === "GET" && url.pathname === "/data") {
-      return Response.json({ ok: true, message: `${parsed}` });
+      return Response.json({ ok: true, data: parsed });
     }
 
     if (request.method === "POST" && url.pathname === "/parse") {
