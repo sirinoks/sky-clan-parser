@@ -6,7 +6,10 @@
   "scripts": {
     "pretest": "tsc --incremental -p tests/tsconfig.json",
     "test": "playwright test -c tests-out",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "repository": {
     "type": "git",
@@ -25,11 +28,12 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.41.2",
+    "@playwright/test": "^1.59.1",
     "@tsconfig/node21": "^21.0.8",
     "@tsconfig/recommended": "^1.0.13",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.83.0"
   }
 }

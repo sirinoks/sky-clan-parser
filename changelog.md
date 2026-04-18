@@ -3,6 +3,7 @@
 2026.04.17
 
 - API added
+- GET all fights; POST user text and GET parsed data back in API functionality added
 
 ## V.01.00.01
 
