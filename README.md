@@ -48,3 +48,4 @@ http://localhost:3643/parse
 - Typescript
 - Docker
 - Express
+- Wrangler
