@@ -131,4 +131,4 @@ dist
 /playwright/.cache/
 
 # wrangler
-.wranger*
+.wrangler*
