@@ -41,7 +41,8 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/parse") {
       const body = (await request.json().catch(() => null)) as ParseRequestBody | null;
-      console.log("Received body:", body);
+      console.log("Received body:");
+      console.log(body);
       if (!body || typeof body.logs !== "string") {
         return withCorsHeaders(
           Response.json(
