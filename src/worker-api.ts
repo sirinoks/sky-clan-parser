@@ -43,6 +43,11 @@ export default {
       const body = (await request.json().catch(() => null)) as ParseRequestBody | null;
       console.log("Received body:");
       console.log(body);
+      console.log("body length: ", body?.logs?.length);
+      if(body)
+        console.log("there is a body")
+      else
+        console.log("there is no body")
       if (!body || typeof body.logs !== "string") {
         return withCorsHeaders(
           Response.json(
