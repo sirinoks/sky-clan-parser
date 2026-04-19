@@ -1,3 +1,9 @@
+## V.01.00.03
+
+2026.04.19
+
+- Parser can handle logs without an explicit builder and where names of islands include "Остров"
+
 ## V.01.00.02
 
 2026.04.17

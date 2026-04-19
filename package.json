@@ -1,6 +1,6 @@
 {
   "name": "sky-clan-parser",
-  "version": "01.00.02",
+  "version": "01.00.03",
   "description": "Sky2fly scheduling fights parser",
   "main": "index.js",
   "scripts": {
