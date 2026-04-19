@@ -97,17 +97,21 @@ function parseDataLine(line: string): Fight {
   oneLine = removeCollectedFromData(oneLine, ", ");
 
 
-  let island = oneLine.slice(
-    oneLine.indexOf('Остров "') + 'Остров "'.length,
-    oneLine.indexOf(",") - ",".length,
-  );
-  oneLine = removeCollectedFromData(oneLine, ", ");
+  const islandStart = oneLine.indexOf('Остров "') + 'Остров "'.length;
+  const islandEnd = oneLine.indexOf('"', islandStart);
+  const island = oneLine.slice(islandStart, islandEnd);
 
-  let builder = oneLine.slice(
-    oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length,
-    oneLine.indexOf(",") - ",".length,
-  );
-  oneLine = removeCollectedFromData(oneLine, ", ");
+  oneLine = oneLine.slice(islandEnd + 1);
+
+  let builder="наш"
+  if(oneLine.includes("построенный кланом")){
+    builder = oneLine.slice(
+      oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length,
+      oneLine.indexOf(",") - ",".length,
+    );
+    oneLine = removeCollectedFromData(oneLine, ", ");
+  }
+   
 
   let attackerClan = oneLine.slice(
     oneLine.indexOf('атакован кланом "') + 'атакован кланом "'.length,
