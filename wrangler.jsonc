@@ -10,12 +10,21 @@
       "enabled": true,
       "head_sampling_rate": 1,
       "persist": true,
-      "invocation_logs": true
+      "invocation_logs": true,
     },
     "traces": {
       "enabled": false,
       "persist": true,
-      "head_sampling_rate": 1
-    }
-  }
+      "head_sampling_rate": 1,
+    },
+  },
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "40a9e5a373ad43b0957f6d14f1ae8ee4",
+
+      // Optional: preview_id used when running `wrangler dev` for local dev
+      "preview_id": "<ID_OF_PREVIEW_KV_NAMESPACE_FOR_LOCAL_DEVELOPMENT>",
+    },
+  ],
 }

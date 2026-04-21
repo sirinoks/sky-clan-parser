@@ -28,6 +28,7 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260421.1",
     "@playwright/test": "^1.59.1",
     "@tsconfig/node21": "^21.0.8",
     "@tsconfig/recommended": "^1.0.13",

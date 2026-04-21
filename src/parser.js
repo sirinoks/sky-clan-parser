@@ -1,27 +1,48 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
+var __createBinding =
+  (this && this.__createBinding) ||
+  (Object.create
+    ? function (o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            },
+          };
+        }
+        Object.defineProperty(o, k2, desc);
+      }
+    : function (o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        o[k2] = m[k];
+      });
+var __setModuleDefault =
+  (this && this.__setModuleDefault) ||
+  (Object.create
+    ? function (o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+      }
+    : function (o, v) {
+        o["default"] = v;
+      });
+var __importStar =
+  (this && this.__importStar) ||
+  function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null)
+      for (var k in mod)
+        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+          __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-};
+  };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fightClass_1 = __importStar(require("./fightClass"));
 const clanLogs = `
@@ -79,67 +100,91 @@ console.log("start");
 let regex = `База \(*`;
 //Splits text into lines
 function lines(text) {
-    return text.split("\n");
+  return text.split("\n");
 }
 function getPosition(string, subString, index) {
-    return string.split(subString, index).join(subString).length;
+  return string.split(subString, index).join(subString).length;
 }
 // oneLine = oneLine.substring(oneLine.indexOf(", ")+", ".length, oneLine.length);
 //Take the data string, remove the part with the data collected, leave the rest and return it back
 function removeCollectedFromData(dataString, matchString) {
-    return dataString.substring(dataString.indexOf(matchString) + matchString.length, dataString.length);
+  return dataString.substring(
+    dataString.indexOf(matchString) + matchString.length,
+    dataString.length,
+  );
 }
 let logs = [];
 function parseDataLine(line) {
-    let oneLine = line;
-    let location;
-    let stringLocation = oneLine.slice(oneLine.indexOf("База (") + "База (".length, oneLine.indexOf(","));
-    if ((0, fightClass_1.isLocation)(stringLocation)) {
-        location = stringLocation;
-        oneLine = removeCollectedFromData(oneLine, ", ");
-    }
-    else {
-        throw new Error("Invalid location: " + stringLocation + ". Line: " + line);
-    }
-    let island = oneLine.slice(oneLine.indexOf('Остров "') + 'Остров "'.length, oneLine.indexOf(",") - ",".length);
+  let oneLine = line;
+  let location;
+  let stringLocation = oneLine.slice(
+    oneLine.indexOf("База (") + "База (".length,
+    oneLine.indexOf(","),
+  );
+  if ((0, fightClass_1.isLocation)(stringLocation)) {
+    location = stringLocation;
     oneLine = removeCollectedFromData(oneLine, ", ");
-    let builder = oneLine.slice(oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length, oneLine.indexOf(",") - ",".length);
-    oneLine = removeCollectedFromData(oneLine, ", ");
-    let attackerClan = oneLine.slice(oneLine.indexOf('атакован кланом "') + 'атакован кланом "'.length, oneLine.indexOf('" '));
-    oneLine = removeCollectedFromData(oneLine, '" ');
-    //Date is always XX.XX.XX
-    let date = oneLine.slice(0, "XX.XX.XX".length);
-    //Time is always XX:XX
-    let time = oneLine.slice("XX.XX.XX ".length, "XX.XX.XX ".length + "YY:YY".length);
-    // return {
-    //   location: location,
-    //   island: island,
-    //   builder: builder,
-    //   attacker: attackerClan,
-    //   date: date,
-    //   time: time,
-    // };
-    return new fightClass_1.default(location, island, builder, attackerClan, date, time);
+  } else {
+    throw new Error("Invalid location: " + stringLocation + ". Line: " + line);
+  }
+  let island = oneLine.slice(
+    oneLine.indexOf('Остров "') + 'Остров "'.length,
+    oneLine.indexOf(",") - ",".length,
+  );
+  oneLine = removeCollectedFromData(oneLine, ", ");
+  let builder = oneLine.slice(
+    oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length,
+    oneLine.indexOf(",") - ",".length,
+  );
+  oneLine = removeCollectedFromData(oneLine, ", ");
+  let attackerClan = oneLine.slice(
+    oneLine.indexOf('атакован кланом "') + 'атакован кланом "'.length,
+    oneLine.indexOf('" '),
+  );
+  oneLine = removeCollectedFromData(oneLine, '" ');
+  //Date is always XX.XX.XX
+  let date = oneLine.slice(0, "XX.XX.XX".length);
+  //Time is always XX:XX
+  let time = oneLine.slice(
+    "XX.XX.XX ".length,
+    "XX.XX.XX ".length + "YY:YY".length,
+  );
+  // return {
+  //   location: location,
+  //   island: island,
+  //   builder: builder,
+  //   attacker: attackerClan,
+  //   date: date,
+  //   time: time,
+  // };
+  return new fightClass_1.default(
+    location,
+    island,
+    builder,
+    attackerClan,
+    date,
+    time,
+  );
 }
 function parseDataFull(lines) {
-    console.log(lines.length);
-    var fights = [];
-    for (let i = 0; i < lines.length; i++) {
-        if (lines[i].length > 1) {
-            fights.push(parseDataLine(lines[i]));
-        }
+  console.log(lines.length);
+  var fights = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].length > 1) {
+      fights.push(parseDataLine(lines[i]));
     }
-    return fights;
+  }
+  return fights;
 }
 //Only leave confirmed attacks in logs
 function filterDefinedAttacks(unsortedLogs) {
-    let sortedLogs = [];
-    for (let i = 0; i < unsortedLogs.length; i++) {
-        if (unsortedLogs[i].includes("будет атакован кланом")) {
-            sortedLogs.push(unsortedLogs[i]);
-        }
+  let sortedLogs = [];
+  for (let i = 0; i < unsortedLogs.length; i++) {
+    if (unsortedLogs[i].includes("будет атакован кланом")) {
+      sortedLogs.push(unsortedLogs[i]);
     }
-    return sortedLogs;
+  }
+  return sortedLogs;
 }
 let warLines = lines(warLogs2);
 let filtered = filterDefinedAttacks(warLines);

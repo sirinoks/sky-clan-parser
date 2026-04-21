@@ -42,7 +42,7 @@ const warLogs3 = `
 14:10:01 База (Осколки, [Остров свёрнут]) Остров "не трогать! /Остров-склад [3]" будет атакован кланом "Небесная_КанЦеляриЯ" 19.04.26 21:00 по мск.
 14:10:02 База (Бастион, [Лабиринт В 48:37]) Остров "Капа /Генератор тоннелей ветра [3]" будет атакован кланом "Небесная_КанЦеляриЯ" 19.04.26 22:00 по мск.
 21:00:00 В рейтинге кланов по региону "Поющий Риф" наш клан занял 5-е место
-`
+`;
 
 const chatLogs = `
 13:10 (Периферия) остров "Мама куба села и база утонула" завтра будет атакован кланом "Guard Heaven" в 21:30 по мск.
@@ -98,22 +98,20 @@ function parseDataLine(line: string): Fight {
   let location: Location = stringLocation as Location;
   oneLine = removeCollectedFromData(oneLine, ", ");
 
-
   const islandStart = oneLine.indexOf('Остров "') + 'Остров "'.length;
   const islandEnd = oneLine.indexOf('"', islandStart);
   const island = oneLine.slice(islandStart, islandEnd);
 
   oneLine = oneLine.slice(islandEnd + 1);
 
-  let builder="наш"
-  if(oneLine.includes("построенный кланом")){
+  let builder = "наш";
+  if (oneLine.includes("построенный кланом")) {
     builder = oneLine.slice(
       oneLine.indexOf('построенный кланом "') + 'построенный кланом "'.length,
       oneLine.indexOf(",") - ",".length,
     );
     oneLine = removeCollectedFromData(oneLine, ", ");
   }
-   
 
   let attackerClan = oneLine.slice(
     oneLine.indexOf('атакован кланом "') + 'атакован кланом "'.length,
@@ -142,7 +140,7 @@ function parseDataLine(line: string): Fight {
 }
 
 function parseDataFull(lines: Array<string>): Array<Fight> {
-  console.log("Amount of lines is: "+ lines.length);
+  console.log("Amount of lines is: " + lines.length);
   var fights: Array<Fight> = [];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].length > 1) {
@@ -169,11 +167,10 @@ function parseLogs(text: string): Array<Fight> {
   return parseDataFull(filtered);
 }
 
-
 let warLines = lines(warLogs3);
 let filtered = filterDefinedAttacks(warLines);
 const parsed: Array<Fight> = parseDataFull(filtered);
 console.log("Parsed data in parser is: ", parsed);
 
-export {parseLogs}
+export { parseLogs };
 export default parsed;
