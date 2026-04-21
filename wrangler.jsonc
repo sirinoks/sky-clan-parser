@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "skyclanparser",
+  "name": "sky-clan-parser",
   "main": "src/worker-api.ts",
   "compatibility_date": "2026-04-17",
   "observability": {
