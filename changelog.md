@@ -1,3 +1,9 @@
+## V.01.00.04
+
+2026.04.21
+
+- Added saving to cloudflare KV functionality (their storage)
+
 ## V.01.00.03
 
 2026.04.19

@@ -12,6 +12,8 @@ type ParseRequestBody = {
 
 // ================= Helpers: ================
 
+
+// Add CORS headers to a response
 function withCorsHeaders(response: Response): Response {
   const newHeaders = new Headers(response.headers);
   newHeaders.set("Access-Control-Allow-Origin", "*"); // Or your frontend URL
