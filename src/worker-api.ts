@@ -12,7 +12,6 @@ type ParseRequestBody = {
 
 // ================= Helpers: ================
 
-
 // Add CORS headers to a response
 function withCorsHeaders(response: Response): Response {
   const newHeaders = new Headers(response.headers);

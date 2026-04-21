@@ -32,6 +32,12 @@ To format:
 prettier -w .
 ```
 
+To run tests:
+
+```
+npx playwright test
+```
+
 ## Links
 
 #### Get all fights data
