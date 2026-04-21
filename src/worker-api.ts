@@ -1,6 +1,8 @@
 /// <reference types="@cloudflare/workers-types" />
 
 import parsed, { parseLogs } from "./parser";
+import { sortbyDate, sortByTime } from "./sorting";
+import Fight from "./fightClass";
 
 interface Env {
   KV: KVNamespace;
@@ -48,6 +50,14 @@ async function generateFightKey(fight: any): Promise<string> {
   return `fight:${hashHex}`;
 }
 
+function sortFightsByDateAndTime(fights: Fight[]): Fight[] {
+  return fights.sort((a, b) => {
+    const dateComparison = sortbyDate(a, b);
+    if (dateComparison !== 0) return dateComparison;
+    return sortByTime(a, b);
+  });
+}
+
 // ================= Helpers END ================
 
 // ================= Endpoints: =================
@@ -69,11 +79,6 @@ async function handleParse(request: Request): Promise<Response> {
   const body = (await request
     .json()
     .catch(() => null)) as ParseRequestBody | null;
-  console.log("Received body:");
-  console.log(body);
-  console.log("body length: ", body?.logs?.length);
-  if (body) console.log("there is a body");
-  else console.log("there is no body");
   if (!body || typeof body.logs !== "string") {
     return withCorsHeaders(
       Response.json(
@@ -147,7 +152,10 @@ async function saveFightsToKV(request: Request, env: Env): Promise<Response> {
 async function getAllFightsFromKV(env: Env): Promise<Response> {
   const list = await env.KV.list({ prefix: "fight:" });
   const values = await Promise.all(list.keys.map((k) => env.KV.get(k.name)));
-  const fights = values.map((v) => v && JSON.parse(v)).filter(Boolean);
+  let fights = values.map((v) => v && JSON.parse(v)).filter(Boolean);
+  console.log("Unsorted fights:", fights);
+  fights = sortFightsByDateAndTime(fights);
+  console.log("Sorted fights:", fights);
   return withCorsHeaders(Response.json({ ok: true, fights }));
 }
 
